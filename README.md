@@ -28,6 +28,6 @@ Next, you will run a script to create the necessary database objects (tables, st
 
 With the architecture and account configured, you can now begin the data ingestion process.
 
-* Open the `data_ingest.sql` file and run the code to kick off the pipeline. This will start the process of pulling files from your Azure stage, processing them, and loading the data into the target tables in Snowflake.
+* Open the `data_ingest.sql` file and execute the stored procedure to kick off the pipeline. This will start the process of parsing the price transparency file and writing it to the Azure stage. 
 
 ---
