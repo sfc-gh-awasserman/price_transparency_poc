@@ -13,7 +13,7 @@ CREATE STORAGE INTEGRATION azure_storage_integration
 
 
 // fill in URL 
-CREATE OR REPLACE STAGE azure_ext_data_stg
+CREATE OR REPLACE STAGE ext_data_stg
     URL = ''
     STORAGE_INTEGRATION = azure_storage_integration
     DIRECTORY = (ENABLE = TRUE REFRESH_ON_CREATE = FALSE)
