@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This proof-of-concept (POC) demonstrates a pipeline for parsing and ingesting healthcare price transparency files into Snowflake for analysis. This uses the codebase from the Snowflake Labs repository that can be found [here] (https://github.com/Snowflake-Labs/CMSgov-pricing-transparency) The process involves setting up an external stage in Microsoft Azure and using a series of SQL scripts to configure the Snowflake environment and process the data.
+This proof-of-concept (POC) demonstrates a pipeline for parsing and ingesting healthcare price transparency files into Snowflake for analysis. This uses the codebase from the Snowflake Labs repository that can be found [here](https://github.com/Snowflake-Labs/CMSgov-pricing-transparency) The process involves setting up an external stage in Microsoft Azure and using a series of SQL scripts to configure the Snowflake environment and process the data.
 
 ---
 
