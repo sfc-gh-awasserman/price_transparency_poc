@@ -7,7 +7,7 @@ CALL process_pricing_transparency_file(
     1000,    -- segments_per_task
     10,      -- dag_rows - dynamically set 
     8,       -- dag_cols - dynamically set 
-    'MEDIUM' -- warehouse_size
+    'XSMALL' -- warehouse_size
 );
 
 
