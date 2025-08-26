@@ -17,7 +17,19 @@ group by data_file;
 -- from the view into a structured Snowflake table. This improves query performance for
 -- subsequent analysis by materializing the results.
 CREATE OR REPLACE TABLE NEGOTIATED_PRICES AS
-SELECT * FROM NEGOTIATED_PRICES_V;
+SELECT 
+    DATA_FILE,
+    NEGOTIATION_ARRANGEMENT,
+    BILLING_CODE,
+    BILLING_CODE_TYPE_VERSION_AND_VERSION,
+    NAME,
+    DESCRIPTION,
+    PROVIDER_GROUPS,
+    BILLING_CLASS,
+    EXPIRATION_DATE,
+    NEGOTIATED_RATE,
+    NEGOTIATED_TYPE,
+ FROM NEGOTIATED_PRICES_V;
 
 -- Step 3: Flatten Nested JSON for Analysis
 -- This query demonstrates how to use the LATERAL FLATTEN function to de-normalize 
