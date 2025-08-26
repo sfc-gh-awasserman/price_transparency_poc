@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This proof-of-concept (POC) demonstrates a pipeline for parsing and ingesting healthcare price transparency files into Snowflake for analysis. This uses the codebase from the Snowflake Labs repository that can be found [here](https://github.com/Snowflake-Labs/CMSgov-pricing-transparency) The process involves setting up an external stage in Microsoft Azure and using a series of SQL scripts to configure the Snowflake environment and process the data.
+This proof-of-concept (POC) demonstrates a pipeline for parsing and ingesting healthcare price transparency files into Snowflake for analysis. This uses the codebase from the Snowflake Labs repository that can be found [here](https://github.com/Snowflake-Labs/CMSgov-pricing-transparency). The process involves setting up an external stage in Microsoft Azure and using a series of SQL scripts to configure the Snowflake environment and process the data.
 
 ---
 
@@ -28,7 +28,22 @@ Next, you will run a script to create the necessary database objects (tables, st
 
 With the architecture and account configured, you can now begin the data ingestion process.
 
-1. Connect to Snowflake with SnowSQL (CLI client), and put the price transparency file in the data directory of the internal stage: put file:///pathtofile/price_transparency.json @data_stg/data auto_compress = false;
-2. Open the `data_ingest.sql` file and execute the stored procedure to kick off the pipeline. This will start the process of parsing the price transparency file and writing it to the Azure stage. 
+1.  Connect to Snowflake with SnowSQL (CLI client), and put the price transparency file in the data directory of the internal stage: `put file:///pathtofile/price_transparency.json @data_stg/data auto_compress = false;`
+2.  Open the `data_ingest.sql` file and execute the stored procedure to kick off the pipeline. This will start the process of parsing the price transparency file and writing it to the Azure stage.
 
 ---
+
+## 🧪 Lab 2: Data Transformation and Analysis
+
+This lab focuses on transforming the ingested semi-structured JSON data into a flattened, relational format that is optimized for analysis.
+
+### 1. Transforming and Persisting Data
+
+The `data_transformation.sql` script contains a series of SQL commands that will progressively transform and flatten the data.
+
+1.  **Open `data_transformation.sql`** in a Snowflake worksheet.
+2.  **Execute the script step-by-step** to observe the transformations:
+    * **Step 1:** Previews the initial data transformation performed by the `NEGOTIATED_PRICES_V` view.
+    * **Step 2:** Persists the view's data into a structured table called `NEGOTIATED_PRICES` using a CTAS statement. This materializes the data for better performance.
+    * **Step 3:** Demonstrates how to use the `LATERAL FLATTEN` function to de-normalize the nested `provider_groups` and `npi` arrays.
+    * **Step 4:** Creates a final, fully flattened table named `NEGOTIATED_PRICES_FLAT`. This table is ideal for BI tools and direct analytical queries, as it removes the complexity of the original JSON structure.
