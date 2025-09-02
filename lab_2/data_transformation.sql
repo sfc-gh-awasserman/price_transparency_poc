@@ -94,3 +94,51 @@ select * from negotiated_prices_flat where billing_code ='36905' and npi = '1518
 
 -- We can also use the negotiated_prices_v view to perform analytics as well. Our external table is clustered, so Snowflake efficiently can query this view as well 
 
+-- Step 6: Below shows how we transform and flatten the BCBS data from this file https://app0004702110a5prdnc868.blob.core.windows.net/output/2025-07-18_Blue-Cross-and-Blue-Shield-of-Illinois_Blue-Options-or-Blue-Choice-Options_in-network-rates.json.gz
+
+
+CREATE OR REPLACE TABLE FLATTENED_RATES
+AS 
+SELECT
+    rates.name,
+    rates.description,
+    rates.billing_class,
+    rates.billing_code,
+    rates.billing_code_type,
+    rates.negotiated_rate,
+    rate_group.value AS provider_group_id,
+    provider_npi.value AS npi
+FROM
+    HEALTH_PLAN_RATES AS rates,
+    LATERAL FLATTEN(INPUT => rates.PROVIDER_REFERENCES) AS rate_group
+JOIN
+    HEALTH_PLAN_PROVIDERS AS p ON rate_group.value = p.PROVIDER_GROUP_ID,
+    LATERAL FLATTEN(INPUT => p.npi) AS provider_npi;
+
+
+
+select * from flattened_rates where provider_group_id = '121.1529831' and billing_code = 'L6584';
+
+select avg(negotiated_rate) from flattened_rates where billing_code = 'L6584';
+
+select * from flattened_rates where billing_code = 'L6584';
+
+
+select 
+    avg(negotiated_rate),
+    provider_group_id,
+    name,
+    description
+from 
+    flattened_rates
+where 
+    billing_code = 'L6584'
+group by 
+    provider_group_id,
+    name,
+    description
+order by avg(negotiated_rate);
+
+
+
+select * from flattened_rates limit 100;
