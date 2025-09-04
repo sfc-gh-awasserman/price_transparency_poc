@@ -1,6 +1,7 @@
 // This is how we start the data ingest process, after the setup steps have been completed. 
 // This function creates the DAG, and begins the processing. 
 
+USE DATABASE PRICE_TRANSPARENCY_POC;
 
 CALL process_pricing_transparency_file(
     '2025_04_01_priority_health_HMO_in-network-rates.json', 
