@@ -47,3 +47,24 @@ The `data_transformation.sql` script contains a series of SQL commands that will
     * **Step 2:** Persists the view's data into a structured table called `NEGOTIATED_PRICES` using a CTAS statement. This materializes the data for better performance.
     * **Step 3:** Demonstrates how to use the `LATERAL FLATTEN` function to de-normalize the nested `provider_groups` and `npi` arrays.
     * **Step 4:** Creates a final, fully flattened table named `NEGOTIATED_PRICES_FLAT`. This table is ideal for BI tools and direct analytical queries, as it removes the complexity of the original JSON structure.
+
+
+## 🧪 Lab 3: RBAC and Data Quality
+
+This lab demonstrates how to implement role-based access control (RBAC) to secure sensitive data and how to use built-in functions to monitor data quality.
+
+### 1. Implementing Role-Based Access Control (RBAC)
+
+The `RBAC.sql` script shows how to create a role and a masking policy to restrict access to certain data columns.
+
+1. **Create an analytical role:** Clone the `flattened_rates` table and create a new role called `ANALYST_ROLE`, then grant this role to a user.
+
+2. **Create a masking policy:** Define a masking policy that will conditionally mask a column's value based on the current user's role. If the user has the `ANALYST_ROLE`, the data is visible; otherwise, it is masked.
+
+3. **Apply the policy:** Apply the new masking policy to the `DESCRIPTION` column of the cloned table. When an unauthorized user queries this table, the `DESCRIPTION` column will display as '**MASKED**'.
+
+### 2. Data Quality Monitoring
+
+The script also provides examples of using Snowflake's built-in functions to check for data quality issues, such as `NULL` values.
+
+* Use the `SNOWFLAKE.CORE.NULL_COUNT()` and `SNOWFLAKE.CORE.NULL_PERCENT()` functions to quickly identify the number or percentage of `NULL` values in specific columns, helping to monitor and maintain data integrity.
